@@ -2,6 +2,7 @@ import express from 'express'
 import mongoose from 'mongoose'
 import multer from 'multer'
 import cors from 'cors'
+import fs from 'fs'
 
 import {loginValidation, postCreateValidation, registerValidation} from './validations.js'
 import {PostController, UserController} from './controllers/index.js'
@@ -21,6 +22,9 @@ const app = express();
 //Создаём хранилище, где мы будем сохранять картинки
 const storage = multer.diskStorage({
   destination: (_, __, callBack) => { //Эта функция укажет путь, куда загружать файлы.
+    if(!fs.existsSync('uploads')) {
+      fs.mkdirSync('uploads')
+    }
     callBack(null, 'uploads')
   },
   filename: (_, file, callBack) => { //Эта функция укажет как их называть.
