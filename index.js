@@ -10,7 +10,7 @@ import {checkAuth, handleValidationErrors} from './utils/index.js'
 
 //Аккаунт на монго через виртуальную машину. Подключение к базе данных.
 mongoose.connect(
-  'mongodb+srv://admin:wwwwww@cluster0.yjz7ztq.mongodb.net/blog?retryWrites=true&w=majority'
+  process.env.MONGODB_URI
 )
   .then(() => console.log('DB OK'))
   .catch((err) => console.log('DB error', err))
@@ -96,7 +96,7 @@ app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
 
 
 //Говорим приложению слушать порт 4444 и запускаться на нем. И в слуии ошибки выводить ее в консоль
-app.listen(4444, (err) => {
+app.listen(process.env.PORT || 4444, (err) => {
   if (err) {
     return console.log(err);
   }
