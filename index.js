@@ -10,8 +10,9 @@ import {checkAuth, handleValidationErrors} from './utils/index.js'
 
 
 //Аккаунт на монго через виртуальную машину. Подключение к базе данных.
-mongoose.connect(
-  process.env.MONGODB_URI
+mongoose.connect( 'mongodb+srv://admin:wwwwww@cluster0.yjz7ztq.mongodb.net/blog?retryWrites=true&w=majority'
+
+  // process.env.MONGODB_URI
 )
   .then(() => console.log('DB OK'))
   .catch((err) => console.log('DB error', err))
@@ -43,7 +44,7 @@ app.use(cors())
 
 //Учит приложение проверять папку uploads на наличие указанного файла и если он есть показывать картинку.
 //Метод статик учит експресс понимать что ты не просто делаешь гет запрос, а именно гет запрос на получение статичного фала.
-app.use('/uploads', express.static('uploads'))
+app.use('uploads', express.static('uploads'))
 
 
 //Приложение будет отлавливать гет запросы на корневой путь и возвращать хеллоу ворлд
@@ -94,12 +95,12 @@ app.patch('/posts/:id', checkAuth, postCreateValidation, handleValidationErrors,
 //Запрос на ЗАГРУЗКУ ФАЛОВ!!!
 app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
   res.json({
-    url: `/uploads/${req.file.originalname}`
+    url: `uploads/${req.file.originalname}`
   })
 })
 
 
-//Говорим приложению слушать порт 4444 и запускаться на нем. И в слуии ошибки выводить ее в консоль
+//Говорим приложению слушать порт 4444 и запускаться на нем. И в случае ошибки выводить ее в консоль
 app.listen(process.env.PORT || 4444, (err) => {
   if (err) {
     return console.log(err);
