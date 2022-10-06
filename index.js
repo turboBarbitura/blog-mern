@@ -95,7 +95,8 @@ app.patch('/posts/:id', checkAuth, postCreateValidation, handleValidationErrors,
 //Запрос на ЗАГРУЗКУ ФАЛОВ!!!
 app.post('/upload', checkAuth, upload.single('image'), (req, res) => {
   res.json({
-    url: `uploads/${req.file.originalname}`
+    //Вот здесь убрал слеш в начале. Из-за него было два слеша в пути к картинке.
+    url: `/uploads/${req.file.originalname}`
   })
 })
 
